@@ -45,7 +45,7 @@ function complexPlot(F, iwindow, owindow, size)
 
 			//complex output
 			//calc2
-			var o = Fc.eval({z:c});
+			var o = Fc.eval({z:c, x:c.re, y:c.im});
 			mapping.push([c,o,x,y]);
 		}
 	}
