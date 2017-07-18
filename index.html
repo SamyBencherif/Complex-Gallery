@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+  <meta charset="UTF-8">
+  <title>Plex Plot</title>
+  <link rel="stylesheet" href="css/style.css">
+
+  <link rel="icon" 
+      type="image/png" 
+      href="favicon.png">
+
+</head>
+
+<body>
+
+  <!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+
+    <div id="images">
+    </div>
+
+    <div id="full-view">
+        <div id="full-container">
+        </div>
+        <img id="full-image" width="512", height="512">
+    </div>
+
+    <input placeholder="Enter an expression in terms of z. (or use &quot;clear&quot; to delete all cards)" 
+    id="card-creator"
+    onkeydown="ccDown(event)"
+    ></input>
+
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/mathjs/dist/math.min.js"></script>
+    <script src="node_modules/mathjax/MathJax.js?config=AM_CHTML"></script>
+    <script src="js/gallery.js"></script>  
+    <script src="js/plex_plot.js"></script>
+</body>
+
+</html>

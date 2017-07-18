@@ -1,0 +1,26 @@
+{
+"sec(sinh(z)).png": {
+"path": "gallery/sec(sinh(z)).png",
+ "function": "sec(sinh(z))"
+},
+
+ "sinh(z).png": {
+"path": "gallery/sinh(z).png",
+ "function": "sinh(z)"
+},
+
+ "snowflake.png": {
+"path": "gallery/snowflake.png",
+ "function": "10arctan(e^sin(z^3))"
+},
+
+ "z^(z^-1).png": {
+"path": "gallery/z^(z^-1).png",
+ "function": "z^(z^-1)"
+},
+
+ "z^-3.png": {
+"path": "gallery/z^-3.png",
+ "function": "z^-3"
+}
+}

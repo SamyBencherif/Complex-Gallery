@@ -1,0 +1,12 @@
+{
+  "name": "plex_plot",
+  "description": "A gallery of complex functions, with a live image renderer.",
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "mathjax": "^2.7.1",
+    "mathjs": "^3.14.2"
+  },
+  "scripts": {
+    "createDirectoryListing": "python3 gallery/createDirectoryListing.py"
+  }
+}
