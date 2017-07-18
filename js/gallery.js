@@ -7,11 +7,49 @@ function createCard(F, iwindow, owindow, size)
     
     var newCard = `<div class="gallery">
                 <img onclick="select(event);" src="${plot.toDataURL()}" alt="z^(z^-1)" width="300" height="300">
-                <div class="desc">\`${F}\`</div>
+                <div class="desc">\`${applyJax(F)}\`</div>
             </div>`;
     $('#images').append(newCard);
     MathJax.Hub.Typeset() //this really should be async
     return newCard;
+}
+
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
+
+var toJax = {
+"acos": "arccos",
+"acosh":"arccosh",
+"acot":"arccot",
+"acoth":"arccoth",
+"acsc":"arccsc",
+"acsch":"arccsch",
+"asec":"arcsec",
+"asech":"arcsech",
+"asin":"arcsin",
+"asinh":"arcsinh",
+"atan":"arctan",
+"atan2":"arctan2",
+"atanh":"arctanh"
+}
+
+
+function applyJax(F)
+{
+    for (atrig in toJax)
+        F = F.replaceAll(atrig, toJax[atrig])
+
+    return F;
+}
+
+function unApplyJax(F)
+{
+    for (atrig in toJax)
+        F = F.replaceAll(toJax[atrig], atrig)
+
+    return F;
 }
 
 function ccDown(ev)
@@ -30,7 +68,8 @@ function ccDown(ev)
         }
         else
         {
-            var card = createCard($('#card-creator').val()); //this also should be async
+            var F = unApplyJax($('#card-creator').val());
+            var card = createCard(F); //this also should be async
             $('#full-image').attr('src', $(card).children('img').attr('src'));
         }
         $('#card-creator').val("")
