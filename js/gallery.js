@@ -5,11 +5,13 @@ function createCard(F, iwindow, owindow, size)
 {
     var plot = complexPlot(F, iwindow, owindow, size);
     
-    $('#images').append(`<div class="gallery">
+    var newCard = `<div class="gallery">
                 <img onclick="select(event);" src="${plot.toDataURL()}" alt="z^(z^-1)" width="300" height="300">
                 <div class="desc">\`${F}\`</div>
-            </div>`);
-    MathJax.Hub.Typeset()
+            </div>`;
+    $('#images').append(newCard);
+    MathJax.Hub.Typeset() //this really should be async
+    return newCard;
 }
 
 function ccDown(ev)
@@ -28,7 +30,8 @@ function ccDown(ev)
         }
         else
         {
-            createCard($('#card-creator').val());
+            var card = createCard($('#card-creator').val()); //this also should be async
+            $('#full-image').attr('src', $(card).children('img').attr('src'));
         }
         $('#card-creator').val("")
     }
