@@ -52,7 +52,8 @@ div.desc {
 
 #images
 {
-	margin-bottom: 40px;
+	position: relative;
+	padding-bottom: 40px;
 }
 
 #MathJax_Message
