@@ -6,12 +6,74 @@ function createCard(F, iwindow, owindow, size)
     var plot = complexPlot(F, iwindow, owindow, size);
     
     var newCard = `<div class="gallery">
-                <img onclick="select(event);" src="${plot.toDataURL()}" alt="z^(z^-1)" width="300" height="300">
+                <img onclick="select(event);" src="${plot.toDataURL()}" alt="${applyJax(F)}" width="300" height="300">
                 <div class="desc">\`${applyJax(F)}\`</div>
             </div>`;
     $('#images').append(newCard);
     MathJax.Hub.Typeset() //this really should be async
     return newCard;
+}
+
+function createGifCard(F, iwindow, owindow, size, duration, fps)
+{
+
+    if (fps*duration <= 1) //invalid gif settings or single frame
+    {
+        return createCard(F, iwindow, owindow, size);
+    }
+
+    var fps = fps || 5;
+    var duration = duration || 2;
+
+    var images = []
+
+    var count=0;
+    for (var t=0; t<=1; t+=1/(fps*duration-1))
+    {
+        var plot = complexPlot(F, iwindow, owindow, size, {t:t});
+        
+        count++;
+
+        images.push(plot.toDataURL());
+        /*
+        if (count==fps*duration) //last frame
+            gif.addFrame(plot, {delay: 3000}) //3 second delay before replay
+        else
+            gif.addFrame(plot, {delay: 1000/fps})
+        */
+    }
+
+    this.newCard = $(`<div class="gallery gifcard">
+            <img onclick="select(event);" src="${plot.toDataURL()}" alt="${applyJax(F)}" width="300" height="300">
+            <div class="desc">\`${applyJax(F)}\`</div>
+        </div>`);
+
+
+    function reverse(k)
+    {
+        o = []
+        for (var i in k)
+        {
+            o[i] = k[k.length-i-1];
+        }
+        return o;
+    }
+
+    gifshot.createGIF({
+        'images': images.concat(reverse(images)),
+        'gifWidth': 512,
+        'gifHeight': 512
+    }, function(obj) {
+
+        if(!obj.error) {
+            this.newCard.children('img').attr('src', obj.image);
+        }
+
+    }.bind(this));
+
+    $('#images').append(newCard);
+    MathJax.Hub.Typeset() //this really should be async
+    return this.newCard;
 }
 
 String.prototype.replaceAll = function(search, replacement) {
@@ -52,6 +114,26 @@ function unApplyJax(F)
     return F;
 }
 
+function expressionContains(exp, v)
+{
+    if (exp.args!=undefined || exp.content!=undefined)
+    {
+        var args = (exp.args || exp.content.args);
+        for (var i in args)
+        {
+            if (expressionContains(args[i], v))
+                return true;
+        }
+    }
+    else
+    {
+        if (exp.name==v)
+            return true;
+    }
+
+    return false;
+}
+
 function ccDown(ev)
 {
 
@@ -69,7 +151,12 @@ function ccDown(ev)
         else
         {
             var F = unApplyJax($('#card-creator').val());
-            var card = createCard(F); //this also should be async
+
+            if (expressionContains(math.parse(F), 't'))
+                var card = createGifCard(F); //this also should be async
+            else
+                var card = createCard(F); //this also should be async
+
             $('#full-image').attr('src', $(card).children('img').attr('src'));
         }
         $('#card-creator').val("")

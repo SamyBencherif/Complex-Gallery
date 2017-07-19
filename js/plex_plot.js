@@ -8,11 +8,13 @@ function squareWindow(x)
 	return [cn(-x/2, -x/2), cn(x/2, x/2)];
 }
 
-function complexPlot(F, iwindow, owindow, size)
+//#TODO use webworker?
+function complexPlot(F, iwindow, owindow, size, mergeToScope)
 {
 	var iwindow = iwindow || squareWindow(10);
 	var owindow = owindow || squareWindow(10);//'auto';
 	var size = size || [256,256];
+	var mergeToScope = mergeToScope || {};
 
 	blendQuality = 3;
 	
@@ -45,7 +47,7 @@ function complexPlot(F, iwindow, owindow, size)
 
 			//complex output
 			//calc2
-			var o = Fc.eval({z:c, x:c.re, y:c.im});
+			var o = Fc.eval(Object.assign({z:c, x:c.re, y:c.im}, mergeToScope));
 			mapping.push([c,o,x,y]);
 		}
 	}
