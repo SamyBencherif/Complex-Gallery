@@ -125,7 +125,7 @@ function complexPlot(F, iwindow, owindow, size, mergeToScope)
 			[int(bl(255*2*(i-.5), 255*2*(.5-r))),
 			int(bl(255*2*(.5-i), 255*2*(.5-r))),
 			int(bl(255*2*(.5-i), 255*2*(r-.5)))] + ")";
-			render.fillRect(x,size[1]-y,1,1);			
+			render.fillRect(x,size[1]-y-1,1,1);			
 		}
 	}
 
