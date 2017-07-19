@@ -5,10 +5,10 @@ function createCard(F, iwindow, owindow, size)
 {
     var plot = complexPlot(F, iwindow, owindow, size);
     
-    var newCard = `<div class="gallery">
+    var newCard = $(`<div class="gallery">
                 <img onclick="select(event);" src="${plot.toDataURL()}" alt="${applyJax(F)}" width="300" height="300">
-                <div class="desc">\`${applyJax(F)}\`</div>
-            </div>`;
+                <div class="desc" data-ascii-function="${applyJax(F)}">\`${applyJax(F)}\`</div>
+            </div>`);
     $('#images').append(newCard);
     MathJax.Hub.Typeset() //this really should be async
     return newCard;
@@ -45,7 +45,7 @@ function createGifCard(F, iwindow, owindow, size, duration, fps)
 
     this.newCard = $(`<div class="gallery gifcard">
             <img onclick="select(event);" src="${plot.toDataURL()}" alt="${applyJax(F)}" width="300" height="300">
-            <div class="desc">\`${applyJax(F)}\`</div>
+            <div class="desc" data-ascii-function="${applyJax(F)}">\`${applyJax(F)}\`</div>
         </div>`);
 
 
@@ -72,7 +72,7 @@ function createGifCard(F, iwindow, owindow, size, duration, fps)
 
     }.bind(this));
 
-    $('#images').append(newCard);
+    $('#images').append(this.newCard);
     MathJax.Hub.Typeset() //this really should be async
     return this.newCard;
 }
@@ -81,6 +81,12 @@ String.prototype.replaceAll = function(search, replacement) {
     var target = this;
     return target.replace(new RegExp(search, 'g'), replacement);
 };
+
+function clickDesc(ev)
+{
+    $('#card-creator').val($(ev.target).closest('.desc').attr('data-ascii-function'));
+    $('#card-creator').focus();
+}
 
 var toJax = {
 "acos": "arccos",
@@ -159,6 +165,7 @@ function ccDown(ev)
                 var card = createCard(F); //this also should be async
 
             $('#full-image').attr('src', $(card).children('img').attr('src'));
+            $(card).children('.desc').click(clickDesc);
         }
         $('#card-creator').val("")
     }
@@ -194,10 +201,12 @@ xmlhttp.onreadystatechange = function() {
             var file = gallery[filename];
             $('#images').append(`<div class="gallery">
                 <img onclick="select(event);" src="gallery/${filename}" alt="z^(z^-1)" width="300" height="300">
-                <div class="desc">\`${file.function}\`</div>
+                <div class="desc" data-ascii-function="${file.function}">\`${file.function}\`</div>
             </div>`);
 
         }
+
+        $('.desc').click(clickDesc);
     }
 };
 xmlhttp.open("GET", "gallery/listing.json", true);
