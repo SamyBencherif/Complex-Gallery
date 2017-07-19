@@ -67,6 +67,7 @@ function createGifCard(F, iwindow, owindow, size, duration, fps)
 
         if(!obj.error) {
             this.newCard.children('img').attr('src', obj.image);
+            $('#full-image').attr('src', obj.image);
         }
 
     }.bind(this));
