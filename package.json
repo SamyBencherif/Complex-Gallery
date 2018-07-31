@@ -2,9 +2,9 @@
   "name": "plex_plot",
   "description": "A gallery of complex functions, with a live image renderer.",
   "dependencies": {
-    "jquery": "^3.2.1",
-    "mathjax": "^2.7.1",
-    "mathjs": "^3.14.2"
+    "jquery": "^3.3.1",
+    "mathjax": "^2.7.5",
+    "mathjs": "^3.20.2"
   },
   "scripts": {
     "createDirectoryListing": "python3 gallery/createDirectoryListing.py"
