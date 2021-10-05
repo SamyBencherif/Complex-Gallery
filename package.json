@@ -4,7 +4,7 @@
   "dependencies": {
     "jquery": "^3.3.1",
     "mathjax": "^2.7.5",
-    "mathjs": "^3.20.2"
+    "mathjs": "^7.5.1"
   },
   "scripts": {
     "createDirectoryListing": "python3 gallery/createDirectoryListing.py"
